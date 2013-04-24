@@ -61,7 +61,6 @@ public class Twitter extends ListActivity {
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            /* "http://search.twitter.com/search.json?q=from:University_West"); */
             try {
                 HttpClient hc = new DefaultHttpClient();
                 Log.i("===========", searchString);
@@ -84,7 +83,7 @@ public class Twitter extends ListActivity {
                     }
                 }
             } catch (Exception e) {
-                Log.e("TwitterFeedActivity", "Error loading JSON", e);
+                Log.e("TwitterActivity", "Error loading JSON", e);
             }
             return null;
         }
@@ -108,7 +107,7 @@ public class Twitter extends ListActivity {
      */
     private String prettyfyDate(String theDate) {
         SimpleDateFormat format = new SimpleDateFormat(
-                "EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+                "EEE, d MMM yyyy HH:mm:ss Z", Locale.getDefault());
 
         try {
 

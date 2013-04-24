@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="hv_bgColor">#ff000000</color>
+    <color name="hv_txtColor">#ffacacac</color>
+	<color name="general_title">#ff0099cc</color>
+</resources>

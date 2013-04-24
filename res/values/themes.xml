@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="hvTheme" parent="android:Theme">
+		<item name="android:textColorPrimary">@color/hv_txtColor</item>
+		<item name="android:windowBackground">@color/hv_bgColor</item>
+		<item name="android:colorBackgroundCacheHint">@color/hv_bgColor</item>
+	</style>    
+</resources>

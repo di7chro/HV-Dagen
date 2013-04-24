@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HV Dagen</string>
+    <string name="label_twitter">Twitter</string>
+    <string name="label_schema">Mitt Schema</string>
+    <string name="label_login">Logga in</string>
+    <string name="label_mindag">Min Dag på HV</string>
+    <!--
+
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+        <string name=""></string>
+    -->
+</resources>

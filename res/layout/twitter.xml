@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_width="fill_parent"
+              android:layout_height="?android:attr/listPreferredItemHeight"
+              android:orientation="horizontal"
+              android:padding="6dip">
+
+    <ImageView
+            android:id="@+id/twitterPic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/tweet_from"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/general_title"
+                android:textSize="20sp"/>
+
+        <TextView
+                android:id="@+id/tweet_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/hv_txtColor"
+                android:textSize="12sp"/>
+
+        <TextView
+                android:id="@+id/tweet_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dip"
+                android:textColor="@color/hv_txtColor"
+                android:textSize="14sp"/>
+    </LinearLayout>
 
 </LinearLayout>

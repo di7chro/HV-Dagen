@@ -2,13 +2,15 @@ package org.crille.hvdagen;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -43,10 +45,6 @@ public class Login extends Activity {
 			 */
 
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),
-                        R.string.login_kolla_uppgifter, Toast.LENGTH_LONG).show();
-                // Loginknappen har klickats. Kolla uppgifterna
-
 
                 String uname = username.getText().toString();
                 String pword = password.getText().toString();
@@ -87,9 +85,15 @@ public class Login extends Activity {
                         // Appends the hash to the URL
                         String loginDataStr = loginXML_URL + hash;
 
-                        Toast.makeText(getApplicationContext(), "Hello: " + arrayList.get(0),
-                                Toast.LENGTH_LONG).show();
-                        Log.i("URL:", loginString);
+                        // Save the loginString to preferences
+                        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("LOGINSTRING", loginDataStr);
+                        editor.commit();
+
+                        // Start the MinDag activity
+                        Intent goToMinDag = new Intent(getApplicationContext(), MinDag.class);
+                        startActivity(goToMinDag);
                     }
 
                 } catch (NoSuchAlgorithmException e1) {
@@ -131,6 +135,19 @@ public class Login extends Activity {
     }
 
     public class LoginData extends AsyncTask<String, Void, ArrayList<String>> {
+        private ProgressDialog progressDialog;
+
+        protected void onPreExecute() {
+            Log.i("Logindata", "1");
+            progressDialog = ProgressDialog.show(Login.this, "",
+                    "Kollar dina uppgifter", true);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> s) {
+            Log.i("Logindata", "3");
+            progressDialog.dismiss();
+        }
 
         @Override
         protected ArrayList<String> doInBackground(String... urlHash) {
@@ -150,11 +167,6 @@ public class Login extends Activity {
             ArrayList<String> loginList = new ArrayList<String>();
             loginList.add(answer);
             return loginList;
-        }
-
-        // Dummy method
-        protected void onPostExecute(Integer result) {
-            Log.d("TestP", "AsyncTask done and returned: " + result);
         }
     }
 }

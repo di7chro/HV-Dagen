@@ -1,8 +1,10 @@
 package org.crille.hvdagen;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -39,6 +41,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class MinDag extends ListActivity {
+    public static final String PREFS_NAME = "MyPrefsFile";
+
     // Create a local ArrayList
     ArrayList<HashMap<String, String>> mindagItems = new ArrayList<HashMap<String, String>>();
 
@@ -62,7 +66,6 @@ public class MinDag extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent in = getIntent();
 
         // Den personliga URL innehållande URL samt app_key=HEMLIG_HASH
         //String url = in.getExtras().getString("URL");
@@ -70,53 +73,65 @@ public class MinDag extends ListActivity {
 
         // Riktiga namnet på den inloggade användaren
         //String realName = in.getExtras().getString("REALNAME");
-        String realName = "Christian Ohlsson";
+        //String realName = "Christian Ohlsson";
 
-        try {
-            // Initiate the ASynkTask
-            MinDagDownloader md_poster = new MinDagDownloader();
+        // Try to get the stored LoginString
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String storedUrl = settings.getString("LOGINSTRING", "");
+        Log.i("URL:", url);
+        Log.i("STORED:", storedUrl);
+        if (url != storedUrl)
+            Log.i("STR", "INTE LIKA");
+        // If nothing found: show message and send user to loginscreen
+        if (url == "") {
+            Log.i("MINDAG", "url är tom");
+            AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
+            myBuild.setTitle("Inget sparat");
+            myBuild.setMessage("Du har inte loggat in ännu. Nu kommer du dit.");
+            myBuild.setNeutralButton("OK", null);
+            myBuild.show();
 
-            // Start the task and give it the URL as input
-            md_poster.execute(url);
+            Intent goToLogin = new Intent(getApplicationContext(), Login.class);
+            startActivity(goToLogin);
+        } else {
+            Log.i("URL LADDAD:", url);
 
-
-            // Fill the ArrayList with the items we got from the ASynkTask
             try {
-                mindagItems = md_poster.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+                // Initiate the ASynkTask
+                MinDagDownloader md_poster = new MinDagDownloader();
+
+                // Start the task and give it the URL as input
+                md_poster.execute(url);
+
+
+                // Fill the ArrayList with the items we got from the ASynkTask
+                try {
+                    mindagItems = md_poster.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                // Add the menuItems to our ListView
+                ListAdapter adapter = new SimpleAdapter(this, mindagItems,
+                        R.layout.mindag_listan, new String[]{KEY_TITLE,
+                        KEY_LINK, KEY_DESC, KEY_DATE, KEY_TAG}, new int[]{
+                        R.id.mydayTitle, R.id.mydayLink,
+                        R.id.mydayDescription, R.id.mydayDate,
+                        R.id.mydayTag});
+                setListAdapter(adapter);
+
+                ListView lv = (ListView) findViewById(R.id.myDayList);
+
+            } catch (Exception e) {
+                System.out
+                        .println("============= MOTHER OF ALL ERRORS IN MYDAY ================");
                 e.printStackTrace();
             }
 
-            // Add the menuItems to our ListView
-            ListAdapter adapter = new SimpleAdapter(this, mindagItems,
-                    R.layout.mindag_listan, new String[]{KEY_TITLE,
-                    KEY_LINK, KEY_DESC, KEY_DATE, KEY_TAG}, new int[]{
-                    R.id.mydayTitle, R.id.mydayLink,
-                    R.id.mydayDescription, R.id.mydayDate,
-                    R.id.mydayTag});
-            setListAdapter(adapter);
-
-            ListView lv = (ListView) findViewById(R.id.myDayList);
-
-            /*lv.setOnItemClickListener(new ListView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    try {
-                        Toast.makeText(getApplicationContext(), "Tröckt",
-                                Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });*/
-
-        } catch (Exception e) {
-            System.out
-                    .println("============= MOTHER OF ALL ERRORS IN MYDAY ================");
-            e.printStackTrace();
         }
+
     }
 
     public class MinDagDownloader extends AsyncTask<String, Void, ArrayList> {

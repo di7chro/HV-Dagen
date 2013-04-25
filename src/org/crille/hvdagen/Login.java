@@ -54,11 +54,10 @@ public class Login extends Activity {
                 // Concaternate the username with the password
                 String userAndPass = uname + pword;
 
-                MessageDigest digest = null;
                 String hash;
                 try {
                     // Select the appropriate Hash-function
-                    digest = MessageDigest.getInstance("SHA-256");
+                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
                     digest.update(userAndPass.getBytes());
 
                     // Get the hash-value for the user
@@ -84,23 +83,13 @@ public class Login extends Activity {
                         showWrongLoginPopup();
                     } else {
                         // loginResult.setText("Välkommen "+arrayList.get(0));
-                        LoginData loginData = new LoginData();
 
                         // Appends the hash to the URL
                         String loginDataStr = loginXML_URL + hash;
 
-                        String[] urlDataHash = {loginDataStr};
-
-                        // Pass the URL to the data and the users realname to
-                        // the new Activity
-                        /*
-                        Intent myIntent = new Intent(Login.this, MyDay.class);
-                        myIntent.putExtra("URL", urlDataHash[0]);
-                        myIntent.putExtra("REALNAME", arrayList.get(0));
-                        startActivity(myIntent);
-                        */
                         Toast.makeText(getApplicationContext(), "Hello: " + arrayList.get(0),
                                 Toast.LENGTH_LONG).show();
+                        Log.i("URL:", loginString);
                     }
 
                 } catch (NoSuchAlgorithmException e1) {
@@ -119,7 +108,7 @@ public class Login extends Activity {
      * @return The hash-value
      */
     private static String bytesToHexString(byte[] bytes) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
             String hex = Integer.toHexString(0xFF & bytes[i]);
             if (hex.length() == 1) {

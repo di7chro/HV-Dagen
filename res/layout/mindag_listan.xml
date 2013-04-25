@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+        <TextView
+                android:id="@+id/mydayTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_weight="1"
+                android:paddingTop="2dip"
+                android:textColor="@color/general_title"
+                android:textSize="20sp" android:text="Titel"/>
+
+        <TextView
+                android:id="@+id/mydayTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="@color/general_title"
+                android:layout_weight="1"
+                android:textSize="15sp" android:text="tagg"/>
+    </LinearLayout>
+    <TextView
+            android:id="@+id/mydayDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingBottom="4dip"
+            android:textColor="@color/hv_txtColor"
+            android:textSize="12sp"/>
+
+    <TextView
+            android:id="@+id/mydayDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/hv_txtColor"
+            android:textSize="14sp"/>
+
+    <TextView
+            android:id="@+id/mydayLink"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            android:paddingBottom="10dp"/>
+
+</LinearLayout>

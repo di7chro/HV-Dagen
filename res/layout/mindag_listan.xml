@@ -29,7 +29,8 @@
                 android:layout_weight="1"
                 android:textSize="15sp" android:text="tagg"/>
     </LinearLayout>
-    <TextView
+
+    <!--<TextView
             android:id="@+id/mydayDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +38,7 @@
             android:paddingBottom="4dip"
             android:textColor="@color/hv_txtColor"
             android:textSize="12sp"/>
-
+    -->
     <TextView
             android:id="@+id/mydayDescription"
             android:layout_width="fill_parent"

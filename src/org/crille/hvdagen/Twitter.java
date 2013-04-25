@@ -3,7 +3,6 @@ package org.crille.hvdagen;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -33,7 +32,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class Twitter extends ListActivity {
-    String searchString;
+    String searchString = "http://search.twitter.com/search.json?q=from%3Ashv_thn%20OR%20%23högskolanväst%20OR%20hogskolanvast%20OR%20%23hv_thn";
     private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 
     public class Tweet {
@@ -47,8 +46,6 @@ public class Twitter extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new TwitterFeedDownloader().execute();
-        Intent in = getIntent();
-        searchString = in.getExtras().getString("STRING");
     }
 
     private class TwitterFeedDownloader extends AsyncTask<Void, Void, Void> {

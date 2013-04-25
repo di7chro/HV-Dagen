@@ -53,7 +53,7 @@ public class MinDag extends ListActivity {
     static final String KEY_LINK = "link";
     static final String KEY_TITLE = "title";
     static final String KEY_DESC = "shortDescription";
-    static final String KEY_DATE = "pubDate";
+    //static final String KEY_DATE = "pubDate";
     static final String KEY_TAG = "tag";
 
 
@@ -67,23 +67,12 @@ public class MinDag extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Den personliga URL innehållande URL samt app_key=HEMLIG_HASH
-        //String url = in.getExtras().getString("URL");
-        String url = "https://mittkonto.hv.se/public/appfeed/app_rss.php?app_key=6f2913a4f3c4e1d516d8f5629b896a270eff97cdcfd066a1ce6b2460079d5919";
-
-        // Riktiga namnet på den inloggade användaren
-        //String realName = in.getExtras().getString("REALNAME");
-        //String realName = "Christian Ohlsson";
-
         // Try to get the stored LoginString
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         String storedUrl = settings.getString("LOGINSTRING", "");
-        Log.i("URL:", url);
-        Log.i("STORED:", storedUrl);
-        if (url != storedUrl)
-            Log.i("STR", "INTE LIKA");
+
         // If nothing found: show message and send user to loginscreen
-        if (url == "") {
+        if (storedUrl == "") {
             Log.i("MINDAG", "url är tom");
             AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
             myBuild.setTitle("Inget sparat");
@@ -94,14 +83,13 @@ public class MinDag extends ListActivity {
             Intent goToLogin = new Intent(getApplicationContext(), Login.class);
             startActivity(goToLogin);
         } else {
-            Log.i("URL LADDAD:", url);
 
             try {
                 // Initiate the ASynkTask
                 MinDagDownloader md_poster = new MinDagDownloader();
 
                 // Start the task and give it the URL as input
-                md_poster.execute(url);
+                md_poster.execute(storedUrl);
 
 
                 // Fill the ArrayList with the items we got from the ASynkTask
@@ -116,9 +104,9 @@ public class MinDag extends ListActivity {
                 // Add the menuItems to our ListView
                 ListAdapter adapter = new SimpleAdapter(this, mindagItems,
                         R.layout.mindag_listan, new String[]{KEY_TITLE,
-                        KEY_LINK, KEY_DESC, KEY_DATE, KEY_TAG}, new int[]{
+                        KEY_LINK, KEY_DESC, KEY_TAG}, new int[]{
                         R.id.mydayTitle, R.id.mydayLink,
-                        R.id.mydayDescription, R.id.mydayDate,
+                        R.id.mydayDescription,
                         R.id.mydayTag});
                 setListAdapter(adapter);
 
@@ -202,7 +190,7 @@ public class MinDag extends ListActivity {
                 map.put(KEY_TAG, "#" + parser.getValue(e, KEY_TAG));
                 map.put(KEY_LINK, parser.getValue(e, KEY_LINK));
                 map.put(KEY_DESC, deUglify(parser.getValue(e, KEY_DESC)));
-                map.put(KEY_DATE, prettyfyDate(parser.getValue(e, KEY_DATE)));
+                //map.put(KEY_DATE, prettyfyDate(parser.getValue(e, KEY_DATE)));
 
                 // adding HashList to ArrayList
                 mindagItems.add(map);

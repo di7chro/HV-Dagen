@@ -3,14 +3,17 @@ package org.crille.hvdagen;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -31,39 +34,28 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 public class MinDag extends ListActivity {
-    public static final String PREFS_NAME = "MyPrefsFile";
+    String PREFS_NAME = "MyPrefsFile";
+    String storedUrl = "";
+    ArrayList<MindagItem> mindagItems = new ArrayList<MindagItem>();
 
-    // Create a local ArrayList
-    ArrayList<HashMap<String, String>> mindagItems = new ArrayList<HashMap<String, String>>();
+    public class MindagItem {
+        String course;
+        String time;
+        String location;
+        String description;
+        String link;
+        String tag;
+    }
 
-    /**
-     * Define the keys in the XML-feed we're interested in
-     */
-    static final String KEY_ITEM = "item"; // parent node
-    static final String KEY_COURSE = "course";
-    static final String KEY_TIME = "time";
-    static final String KEY_LOCATION = "location";
-    static final String KEY_DESC = "description";
-    static final String KEY_LINK = "link";
-    static final String KEY_TAG = "tag";
-
-    /*
-         * Fires up the activity_myday and waits for the Login-button to be pressed.
-         * Then it starts the ASynkTask to gather the XML-feed in the background.
-         * When this is done we can populate the ListAdapter with the stuff from the
-         * feed.
-         */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Try to get the stored LoginString
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        String storedUrl = settings.getString("LOGINSTRING", "");
+        storedUrl = settings.getString("LOGINSTRING", "");
 
         // If nothing found: show message and send user to loginscreen
         if (storedUrl == "") {
@@ -77,44 +69,11 @@ public class MinDag extends ListActivity {
             Intent goToLogin = new Intent(getApplicationContext(), Login.class);
             startActivity(goToLogin);
         } else {
-
-            try {
-                // Initiate the ASynkTask
-                MinDagDownloader md_poster = new MinDagDownloader();
-
-                // Start the task and give it the URL as input
-                md_poster.execute(storedUrl);
-
-
-                // Fill the ArrayList with the items we got from the ASynkTask
-                try {
-                    mindagItems = md_poster.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-
-                // Add the menuItems to our ListView
-                ListAdapter adapter = new SimpleAdapter(this, mindagItems,
-                        R.layout.mindag_listan, new String[]{KEY_COURSE, KEY_TIME, KEY_LOCATION, KEY_DESC, KEY_LINK, KEY_TAG}, new int[]{
-                        R.id.mindagCourse, R.id.mindagTime, R.id.mindagLocation, R.id.mindagDescription, R.id.mindagLink, R.id.mindagTag,});
-                setListAdapter(adapter);
-
-                ListView lv = (ListView) findViewById(R.id.myDayList);
-
-            } catch (Exception e) {
-                System.out
-                        .println("============= MOTHER OF ALL ERRORS IN MYDAY ================");
-                e.printStackTrace();
-            }
-
+            new MinDagDownloader().execute();
         }
-
     }
 
-    public class MinDagDownloader extends AsyncTask<String, Void, ArrayList> {
+    public class MinDagDownloader extends AsyncTask<Void, Void, Void> {
         private ProgressDialog progressDialog;
 
         protected void onPreExecute() {
@@ -122,50 +81,77 @@ public class MinDag extends ListActivity {
             progressDialog = ProgressDialog.show(MinDag.this, "", "Laddar Mindag", true);
         }
 
-
-        /**
-         * Does all the magic in getting an XML-file from the network, parses it, an
-         * filling an ArrayList containing an HashMap of KEY-VALUE-pairs
-         *
-         * @param theURL of the feed
-         * @return The ArrayList called menuItems containing the feed
-         */
-        protected ArrayList doInBackground(String... theURL) {
-            String theFeed = theURL[0];
-
-            XMLParser parser = new XMLParser();
-            String xml = parser.getXmlFromUrl(theFeed); // getting XML
-            Document doc = parser.getDomElement(xml); // getting DOM element
-            NodeList nl = doc.getElementsByTagName(KEY_ITEM);
-            // looping through all item nodes <item>
-            for (int i = 0; i < nl.getLength(); i++) {
-                // creating new HashMap
-                HashMap<String, String> map = new HashMap<String, String>();
-                Element e = (Element) nl.item(i);
-
-                // adding each child node to HashMap key => value
-                map.put(KEY_COURSE, parser.getValue(e, KEY_COURSE));
-                map.put(KEY_TIME, parser.getValue(e, KEY_TIME));
-                map.put(KEY_LOCATION, parser.getValue(e, KEY_LOCATION));
-                map.put(KEY_DESC, parser.getValue(e, KEY_DESC));
-                map.put(KEY_LINK, parser.getValue(e, KEY_LINK));
-                map.put(KEY_TAG, "#" + parser.getValue(e, KEY_TAG));
-
-                // adding HashList to ArrayList
-                mindagItems.add(map);
-            }
-            return mindagItems;
+        @Override
+        protected void onPostExecute(Void result) {
+            Log.i("MinDagDownloader", "AsyncTask done. ");
+            progressDialog.dismiss();
+            setListAdapter(new MindagListAdaptor(MinDag.this,
+                    R.layout.mindag, mindagItems));
         }
 
-        /**
-         * Dummy-method just called after the ASynkTask is done
-         * <p/>
-         * param result
-         */
+        protected Void doInBackground(Void... arg0) {
+
+            try {
+                XMLParser parser = new XMLParser();
+                String xml = parser.getXmlFromUrl(storedUrl); // getting XML
+                Document doc = parser.getDomElement(xml); // getting DOM element
+                NodeList nl = doc.getElementsByTagName("item");
+                // looping through all item nodes <item>
+                for (int i = 0; i < nl.getLength(); i++) {
+                    MindagItem mdi = new MindagItem();
+                    Element e = (Element) nl.item(i);
+
+                    mdi.course = parser.getValue(e, "course");
+                    mdi.time = parser.getValue(e, "time");
+                    mdi.location = parser.getValue(e, "location");
+                    mdi.description = parser.getValue(e, "description");
+                    mdi.link = parser.getValue(e, "link");
+                    mdi.tag = "#" + parser.getValue(e, "tag");
+
+                    // adding HashList to ArrayList
+                    mindagItems.add(mdi);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("MINDAG", "Error loading XML");
+            }
+            return null;
+        }
+    }
+
+    private class MindagListAdaptor extends ArrayAdapter<MindagItem> {
+        private ArrayList<MindagItem> tweets;
+
+        public MindagListAdaptor(Context context, int textViewResourceId,
+                                 ArrayList<MindagItem> items) {
+            super(context, textViewResourceId, items);
+            this.tweets = items;
+
+        }
+
         @Override
-        protected void onPostExecute(ArrayList result) {
-            progressDialog.dismiss();
-            Log.i("MinDagDownloader", "AsyncTask done. ");
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (v == null) {
+                LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(R.layout.mindag, null);
+            }
+            MindagItem mdi = mindagItems.get(position);
+            TextView tvCourse = (TextView) v.findViewById(R.id.mindagCourse);
+            TextView tvTime = (TextView) v.findViewById(R.id.mindagTime);
+            TextView tvLocation = (TextView) v.findViewById(R.id.mindagLocation);
+            TextView tvDescription = (TextView) v.findViewById(R.id.mindagDescription);
+            TextView tvLink = (TextView) v.findViewById(R.id.mindagLink);
+            TextView tvTag = (TextView) v.findViewById(R.id.mindagTag);
+
+            tvCourse.setText(mdi.course);
+            tvTime.setText(mdi.time);
+            tvLocation.setText(mdi.location);
+            tvDescription.setText(mdi.description);
+            tvLink.setText(mdi.link);
+            tvTag.setText(mdi.tag);
+
+            return v;
         }
     }
 
@@ -201,7 +187,6 @@ public class MinDag extends ListActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            // return XML
             return xml;
         }
 

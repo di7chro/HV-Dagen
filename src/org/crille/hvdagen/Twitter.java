@@ -154,9 +154,6 @@ public class Twitter extends ListActivity {
             TextView tvText = (TextView) v.findViewById(R.id.tweet_text);
             TextView tvDate = (TextView) v.findViewById(R.id.tweet_date);
             TextView tvFrom = (TextView) v.findViewById(R.id.tweet_from);
-            Log.i("Twitterbild", o.pic);
-            // new DownloadImageTask((ImageView)
-            // findViewById(R.id.twitterPic)).execute(o.pic);
             tvFrom.setText("@" + o.from);
             tvDate.setText(o.date);
             tvText.setText(o.text);

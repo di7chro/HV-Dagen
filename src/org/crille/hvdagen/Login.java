@@ -24,8 +24,10 @@ import java.util.ArrayList;
 public class Login extends Activity {
     public static final String PREFS_NAME = "MyPrefsFile";
     private static final String loginURL = "http://mittkonto.hv.se/public/appfeed/login_response.php?app_key=";
-    private static final String loginXML_URL = "https://mittkonto.hv.se/public/appfeed/app_rss.php?app_key=";
 
+    // Den här raden används för skolan RSS-ström
+    //private static final String loginXML_URL = "https://mittkonto.hv.se/public/appfeed/app_rss.php?app_key=";
+    private static final String loginXML_URL = "http://public.crille.org/parse.php?key=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

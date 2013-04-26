@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -32,13 +30,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 public class MinDag extends ListActivity {
     public static final String PREFS_NAME = "MyPrefsFile";
@@ -50,12 +44,12 @@ public class MinDag extends ListActivity {
      * Define the keys in the XML-feed we're interested in
      */
     static final String KEY_ITEM = "item"; // parent node
+    static final String KEY_COURSE = "course";
+    static final String KEY_TIME = "time";
+    static final String KEY_LOCATION = "location";
+    static final String KEY_DESC = "description";
     static final String KEY_LINK = "link";
-    static final String KEY_TITLE = "title";
-    static final String KEY_DESC = "shortDescription";
-    //static final String KEY_DATE = "pubDate";
     static final String KEY_TAG = "tag";
-
 
     /*
          * Fires up the activity_myday and waits for the Login-button to be pressed.
@@ -101,13 +95,11 @@ public class MinDag extends ListActivity {
                     e.printStackTrace();
                 }
 
+
                 // Add the menuItems to our ListView
                 ListAdapter adapter = new SimpleAdapter(this, mindagItems,
-                        R.layout.mindag_listan, new String[]{KEY_TITLE,
-                        KEY_LINK, KEY_DESC, KEY_TAG}, new int[]{
-                        R.id.mydayTitle, R.id.mydayLink,
-                        R.id.mydayDescription,
-                        R.id.mydayTag});
+                        R.layout.mindag_listan, new String[]{KEY_COURSE, KEY_TIME, KEY_LOCATION, KEY_DESC, KEY_LINK, KEY_TAG}, new int[]{
+                        R.id.mindagCourse, R.id.mindagTime, R.id.mindagLocation, R.id.mindagDescription, R.id.mindagLink, R.id.mindagTag,});
                 setListAdapter(adapter);
 
                 ListView lv = (ListView) findViewById(R.id.myDayList);
@@ -130,41 +122,6 @@ public class MinDag extends ListActivity {
             progressDialog = ProgressDialog.show(MinDag.this, "", "Laddar Mindag", true);
         }
 
-        private String deUglify(String description) {
-            Spanned temp;
-            temp = Html.fromHtml(description);
-
-            return temp.toString();
-        }
-
-        private String prettyfyDate(String theDate) {
-            SimpleDateFormat format = new SimpleDateFormat(
-                    "EEE, dd MMM yyyy HH:mm:ss z");
-
-            try {
-
-                Date past = format.parse(theDate);
-                Date now = new Date();
-                long diff = TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime());
-
-                if (diff < 60)
-                    theDate = diff + " minuter sedan";
-                else if (diff < 60 * 24)
-                    theDate = diff / 24 + " timmar, " + diff % 60 + " minuter sedan";
-                else if (diff < 60 * 60 * 24) {
-                    if ((diff / 60 / 24) == 1)
-                        theDate = diff / 60 / 24 + " dag, " + diff % 24 + " timmar sedan";
-                    else
-                        theDate = diff / 60 / 24 + " dagar, " + diff % 24 + " timmar sedan";
-                }
-            } catch (ParseException e) {
-            /* Kunde inte parse'a datum, sätt det till Thu, 07 Mar */
-                theDate = theDate.substring(0, 11);
-                e.printStackTrace();
-            }
-
-            return theDate;
-        }
 
         /**
          * Does all the magic in getting an XML-file from the network, parses it, an
@@ -185,12 +142,14 @@ public class MinDag extends ListActivity {
                 // creating new HashMap
                 HashMap<String, String> map = new HashMap<String, String>();
                 Element e = (Element) nl.item(i);
+
                 // adding each child node to HashMap key => value
-                map.put(KEY_TITLE, parser.getValue(e, KEY_TITLE));
-                map.put(KEY_TAG, "#" + parser.getValue(e, KEY_TAG));
+                map.put(KEY_COURSE, parser.getValue(e, KEY_COURSE));
+                map.put(KEY_TIME, parser.getValue(e, KEY_TIME));
+                map.put(KEY_LOCATION, parser.getValue(e, KEY_LOCATION));
+                map.put(KEY_DESC, parser.getValue(e, KEY_DESC));
                 map.put(KEY_LINK, parser.getValue(e, KEY_LINK));
-                map.put(KEY_DESC, deUglify(parser.getValue(e, KEY_DESC)));
-                //map.put(KEY_DATE, prettyfyDate(parser.getValue(e, KEY_DATE)));
+                map.put(KEY_TAG, "#" + parser.getValue(e, KEY_TAG));
 
                 // adding HashList to ArrayList
                 mindagItems.add(map);

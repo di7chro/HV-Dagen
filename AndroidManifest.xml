@@ -38,5 +38,9 @@
                 android:name="Login"
                 android:label="@string/label_login">
         </activity>
+        <activity
+                android:name="PickSchema"
+                android:label="@string/label_pickschema">
+        </activity>
     </application>
 </manifest>

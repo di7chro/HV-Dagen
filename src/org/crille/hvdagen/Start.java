@@ -17,6 +17,7 @@ public class Start extends Activity {
         Button btnSchema = (Button) findViewById(R.id.start_btn_schema);
         Button btnTwitter = (Button) findViewById(R.id.start_btn_twitter);
         Button btnLogin = (Button) findViewById(R.id.start_btn_login);
+        Button btnPickschema = (Button) findViewById(R.id.start_btn_pickschema);
 
         btnMindag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +45,13 @@ public class Start extends Activity {
             public void onClick(View v) {
                 Intent startLogin = new Intent(getApplicationContext(), Login.class);
                 startActivity(startLogin);
+            }
+        });
+        btnPickschema.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startPick = new Intent(getApplicationContext(), PickSchema.class);
+                startActivity(startPick);
             }
         });
     }

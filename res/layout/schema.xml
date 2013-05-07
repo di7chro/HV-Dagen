@@ -1,14 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content">
 
-    <TextView
-            android:layout_width="fill_parent"
+    <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sorry, men den här har jag inte kodat ihop ännu."
-            android:id="@+id/textView"
-            android:textSize="8pt"/>
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/schemaDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingBottom="4dip"
+                android:textColor="@color/hv_txtColor"
+                android:textSize="14sp" android:text="Date"/>
+        <TextView
+                android:id="@+id/schemaTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingBottom="4dip"
+                android:textColor="@color/hv_txtColor"
+                android:textSize="14sp" android:text="Time"/>
+
+        <TextView
+                android:id="@+id/schemaLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingBottom="4dip"
+                android:textColor="@color/hv_txtColor"
+                android:textSize="14sp" android:text="Location"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_gravity="right">
+
+        <TextView
+                android:id="@+id/schemaProgram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dip"
+                android:textColor="@color/general_title"
+                android:textSize="20sp" android:text="Program"/>
+        <TextView
+                android:id="@+id/schemaCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_weight="1"
+                android:paddingTop="2dip"
+                android:textColor="@color/general_title"
+                android:textSize="20sp" android:text="Kurs"/>
+
+        <TextView
+                android:id="@+id/schemaMoment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/hv_txtColor"
+                android:textSize="16sp" android:text="Moment"/>
+
+
+        <TextView
+                android:id="@+id/schemaSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/hv_txtColor"
+                android:textSize="16sp" android:text="Sign"/>
+
+    </LinearLayout>
 </LinearLayout>

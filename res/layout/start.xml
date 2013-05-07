@@ -26,4 +26,9 @@
             android:layout_height="wrap_content"
             android:text="Logga in"
             android:id="@+id/start_btn_login"/>
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Välj schema"
+            android:id="@+id/start_btn_pickschema"/>
 </LinearLayout>

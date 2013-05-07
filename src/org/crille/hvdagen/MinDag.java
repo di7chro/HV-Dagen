@@ -83,7 +83,7 @@ public class MinDag extends ListActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            Log.i("MinDagDownloader", "AsyncTask done. ");
+            Log.i("SchemaDownloader", "AsyncTask done. ");
             progressDialog.dismiss();
             setListAdapter(new MindagListAdaptor(MinDag.this,
                     R.layout.mindag, mindagItems));

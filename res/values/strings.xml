@@ -9,6 +9,7 @@
     <string name="label_schema">Mitt Schema</string>
     <string name="label_login">Logga in</string>
     <string name="label_mindag">Min Dag på HV</string>
+    <string name="label_pickschema">Välj ett schema</string>
 
     <!-- Inloggning-->
     <string name="login_username_hint">Användarnamn</string>
@@ -20,6 +21,10 @@
     <string name="login_wrong_text">De uppgifter som du skrev in stämmer inte. Logga in med de uppgifter som du fått av
         IT-enheten vid Högskolan Väst.
     </string>
+    <string name="pick_info">Personal: Skriv in s.DINSIGNATUR, exempelvis s.ABC. Studenter: skriv in p.DITTPROGRAM,
+        exempelvis p.TGWEM-NÄT-H12-
+    </string>
+    <string name="pickschema_button_text">Spara schema</string>
 
     <!--
 

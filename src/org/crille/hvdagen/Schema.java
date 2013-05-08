@@ -103,15 +103,6 @@ public class Schema extends ListActivity {
                     SchemaItem si = new SchemaItem();
                     Element e = (Element) nl.item(i);
 
-                    String date;
-                    String starttime;
-                    String endtime;
-                    String location;
-                    String program;
-                    String course;
-                    String sign;
-                    String moment;
-
                     si.date = parser.getValue(e, "date");
                     si.starttime = parser.getValue(e, "starttime");
                     si.endtime = parser.getValue(e, "endtime");
@@ -142,6 +133,53 @@ public class Schema extends ListActivity {
 
         }
 
+        private String prettyDate(String oldDate) {
+            String month = "", day;
+            int m;
+
+            m = Integer.parseInt(oldDate.substring(4, 6));
+            day = oldDate.substring(6, 8);
+            switch (m) {
+                case 1:
+                    month = "Jan";
+                    break;
+                case 2:
+                    month = "Feb";
+                    break;
+                case 3:
+                    month = "Mar";
+                    break;
+                case 4:
+                    month = "Apr";
+                    break;
+                case 5:
+                    month = "Maj";
+                    break;
+                case 6:
+                    month = "Jun";
+                    break;
+                case 7:
+                    month = "Jul";
+                    break;
+                case 8:
+                    month = "Aug";
+                    break;
+                case 9:
+                    month = "Sep";
+                    break;
+                case 10:
+                    month = "Okt";
+                    break;
+                case 11:
+                    month = "Nov";
+                    break;
+                case 12:
+                    month = "Dec";
+                    break;
+            }
+            return day + " " + month;
+        }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = convertView;
@@ -158,7 +196,7 @@ public class Schema extends ListActivity {
             TextView tvSign = (TextView) v.findViewById(R.id.schemaSign);
             TextView tvMoment = (TextView) v.findViewById(R.id.schemaMoment);
 
-            tvDate.setText(si.date);
+            tvDate.setText(prettyDate(si.date));
             tvTime.setText(si.starttime + "-" + si.endtime);
             tvLocation.setText(si.location);
             tvProgram.setText("Program: " + si.program);

@@ -15,14 +15,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingBottom="4dip"
-                android:textColor="@color/hv_txtColor"
-                android:textSize="14sp" android:text="Date"/>
+                android:textColor="@color/general_title"
+                android:textSize="20sp" android:text="Date"/>
         <TextView
                 android:id="@+id/schemaTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:paddingBottom="4dip"
+                android:paddingRight="12dip"
                 android:textColor="@color/hv_txtColor"
                 android:textSize="14sp" android:text="Time"/>
 
@@ -41,12 +41,11 @@
             android:orientation="vertical" android:layout_gravity="right">
 
         <TextView
-                android:id="@+id/schemaProgram"
+                android:id="@+id/schemaMoment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="2dip"
                 android:textColor="@color/general_title"
-                android:textSize="20sp" android:text="Program"/>
+                android:textSize="18sp" android:text="Moment"/>
         <TextView
                 android:id="@+id/schemaCourse"
                 android:layout_width="wrap_content"
@@ -54,23 +53,24 @@
                 android:gravity="left"
                 android:layout_weight="1"
                 android:paddingTop="2dip"
-                android:textColor="@color/general_title"
-                android:textSize="20sp" android:text="Kurs"/>
+                android:textColor="@color/hv_txtColor"
+                android:textSize="14sp" android:text="Kurs"/>
 
         <TextView
-                android:id="@+id/schemaMoment"
+                android:id="@+id/schemaProgram"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="2dip"
                 android:textColor="@color/hv_txtColor"
-                android:textSize="16sp" android:text="Moment"/>
-
+                android:textSize="14sp" android:text="Program"/>
 
         <TextView
                 android:id="@+id/schemaSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/hv_txtColor"
-                android:textSize="16sp" android:text="Sign"/>
+                android:paddingBottom="15dip"
+                android:textSize="14sp" android:text="Sign"/>
 
     </LinearLayout>
 </LinearLayout>

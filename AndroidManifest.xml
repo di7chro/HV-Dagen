@@ -42,5 +42,9 @@
                 android:name="PickSchema"
                 android:label="@string/label_pickschema">
         </activity>
+        <activity
+                android:name="SchemaDetail"
+                android:label="@string/label_schema_detail">
+        </activity>
     </application>
 </manifest>

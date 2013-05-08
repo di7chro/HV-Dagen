@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import org.apache.http.HttpEntity;
@@ -89,6 +90,24 @@ public class Schema extends ListActivity {
             progressDialog.dismiss();
             setListAdapter(new SchemaListAdaptor(Schema.this,
                     R.layout.schema, schemaItems));
+            getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String date = schemaItems.get(position).date.toString();
+                    String starttime = schemaItems.get(position).starttime.toString();
+                    String endtime = schemaItems.get(position).endtime.toString();
+                    String location = schemaItems.get(position).location.toString();
+                    String program = schemaItems.get(position).program.toString();
+                    String course = schemaItems.get(position).course.toString();
+                    String sign = schemaItems.get(position).sign.toString();
+                    String moment = schemaItems.get(position).moment.toString();
+
+                    Intent goToDetail = new Intent(getApplicationContext(), SchemaDetail.class);
+                    goToDetail.putExtra("moment", moment);
+                    goToDetail.putExtra("course", course);
+                    startActivity(goToDetail);
+                }
+            });
         }
 
         protected Void doInBackground(Void... arg0) {

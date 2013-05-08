@@ -10,6 +10,7 @@
     <string name="label_login">Logga in</string>
     <string name="label_mindag">Min Dag på HV</string>
     <string name="label_pickschema">Välj ett schema</string>
+    <string name="label_schema_detail">Detaljerad info</string>
 
     <!-- Inloggning-->
     <string name="login_username_hint">Användarnamn</string>

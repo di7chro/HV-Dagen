@@ -93,18 +93,17 @@ public class Schema extends ListActivity {
             getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String date = schemaItems.get(position).date.toString();
-                    String starttime = schemaItems.get(position).starttime.toString();
-                    String endtime = schemaItems.get(position).endtime.toString();
-                    String location = schemaItems.get(position).location.toString();
-                    String program = schemaItems.get(position).program.toString();
-                    String course = schemaItems.get(position).course.toString();
-                    String sign = schemaItems.get(position).sign.toString();
-                    String moment = schemaItems.get(position).moment.toString();
-
                     Intent goToDetail = new Intent(getApplicationContext(), SchemaDetail.class);
-                    goToDetail.putExtra("moment", moment);
-                    goToDetail.putExtra("course", course);
+
+                    goToDetail.putExtra("date", schemaItems.get(position).date.toString());
+                    goToDetail.putExtra("starttime", schemaItems.get(position).starttime.toString());
+                    goToDetail.putExtra("endtime", schemaItems.get(position).endtime.toString());
+                    goToDetail.putExtra("location", schemaItems.get(position).location.toString());
+                    goToDetail.putExtra("program", schemaItems.get(position).program.toString());
+                    goToDetail.putExtra("course", schemaItems.get(position).course.toString());
+                    goToDetail.putExtra("sign", schemaItems.get(position).sign.toString());
+                    goToDetail.putExtra("moment", schemaItems.get(position).moment.toString());
+
                     startActivity(goToDetail);
                 }
             });

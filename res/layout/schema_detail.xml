@@ -10,7 +10,39 @@
             android:layout_height="wrap_content"
             android:text="New Text"
             android:textSize="20sp"
-            android:id="@+id/schema_detail_moment"
+            android:id="@+id/schema_detail_date"
+            android:textColor="@color/hv_txtColor"
+            android:layout_gravity="left|center_vertical"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textSize="20dp"
+            android:id="@+id/schema_detail_starttime"
+            android:textColor="@color/hv_txtColor"
+            android:layout_gravity="left|center_vertical"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textSize="20dp"
+            android:id="@+id/schema_detail_endtime"
+            android:textColor="@color/hv_txtColor"
+            android:layout_gravity="left|center_vertical"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textSize="20dp"
+            android:id="@+id/schema_detail_location"
+            android:textColor="@color/hv_txtColor"
+            android:layout_gravity="left|center_vertical"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textSize="20dp"
+            android:id="@+id/schema_detail_program"
             android:textColor="@color/hv_txtColor"
             android:layout_gravity="left|center_vertical"/>
     <TextView
@@ -21,4 +53,21 @@
             android:id="@+id/schema_detail_course"
             android:textColor="@color/hv_txtColor"
             android:layout_gravity="left|center_vertical"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textSize="20dp"
+            android:id="@+id/schema_detail_sign"
+            android:textColor="@color/hv_txtColor"
+            android:layout_gravity="left|center_vertical"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textSize="20dp"
+            android:id="@+id/schema_detail_moment"
+            android:textColor="@color/hv_txtColor"
+            android:layout_gravity="left|center_vertical"/>
+
 </LinearLayout>

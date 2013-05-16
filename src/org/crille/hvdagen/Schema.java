@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TableRow;
 import android.widget.TextView;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -39,7 +40,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Schema extends ListActivity {
-    String currentDate = "", currentWeek = "";
     String PREFS_NAME = "MyPrefsFile";
     String storedUrl = "";
     ArrayList<SchemaItem> schemaItems = new ArrayList<SchemaItem>();
@@ -80,57 +80,6 @@ public class Schema extends ListActivity {
         }
     }
 
-    static public String getDay(String theDate) {
-        String day = "";
-        try {
-            Calendar mydate = new GregorianCalendar();
-            Date thedate = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).parse(theDate);
-            mydate.setTime(thedate);
-            switch (mydate.get(Calendar.DAY_OF_WEEK)) {
-                case 1:
-                    day = "Söndag";
-                    break;
-                case 2:
-                    day = "Måndag";
-                    break;
-                case 3:
-                    day = "Tisdag";
-                    break;
-                case 4:
-                    day = "Onsdag";
-                    break;
-                case 5:
-                    day = "Torsdag";
-                    break;
-                case 6:
-                    day = "Fredag";
-                    break;
-                case 7:
-                    day = "Lördag";
-                    break;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return day;
-    }
-
-    static public int getWeek(String theDate) {
-        SimpleDateFormat sdf;
-        Calendar cal;
-        Date date;
-        int week = 0;
-        sdf = new SimpleDateFormat("yyyyMMdd");
-        try {
-            date = sdf.parse(theDate);
-            cal = Calendar.getInstance();
-            cal.setTime(date);
-            week = cal.get(Calendar.WEEK_OF_YEAR);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return week;
-    }
 
     public class SchemaDownloader extends AsyncTask<Void, Void, Void> {
         private ProgressDialog progressDialog;
@@ -196,6 +145,7 @@ public class Schema extends ListActivity {
     }
 
     private class SchemaListAdaptor extends ArrayAdapter<SchemaItem> {
+        String prevReturnDate = "", prevReturnWeek = "";
         private ArrayList<SchemaItem> sch_items;
 
         public SchemaListAdaptor(Context context, int textViewResourceId,
@@ -205,8 +155,69 @@ public class Schema extends ListActivity {
 
         }
 
+        public String getDay(String theDate) {
+            String day = "";
+            try {
+                Calendar mydate = new GregorianCalendar();
+                Date thedate = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).parse(theDate);
+                mydate.setTime(thedate);
+                switch (mydate.get(Calendar.DAY_OF_WEEK)) {
+                    case 1:
+                        day = "Söndag";
+                        break;
+                    case 2:
+                        day = "Måndag";
+                        break;
+                    case 3:
+                        day = "Tisdag";
+                        break;
+                    case 4:
+                        day = "Onsdag";
+                        break;
+                    case 5:
+                        day = "Torsdag";
+                        break;
+                    case 6:
+                        day = "Fredag";
+                        break;
+                    case 7:
+                        day = "Lördag";
+                        break;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return day;
+        }
+
+        public String getWeek(String theDate) {
+            SimpleDateFormat sdf;
+            Calendar cal;
+            Date date;
+            int week = 0;
+            String weekString = "";
+            sdf = new SimpleDateFormat("yyyyMMdd");
+            try {
+                date = sdf.parse(theDate);
+                cal = Calendar.getInstance();
+                cal.setTime(date);
+                week = cal.get(Calendar.WEEK_OF_YEAR);
+                weekString = String.valueOf(week);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (prevReturnWeek.equals(weekString))
+                return "";
+            else {
+                prevReturnWeek = weekString;
+                return weekString;
+            }
+
+        }
+
         private String prettyDate(String oldDate) {
-            // Check if the day is Today
+            String returnDate = "";
+
             String year, month = "", day = "";
             Date myDate = new Date();
             Calendar c = Calendar.getInstance();
@@ -216,12 +227,8 @@ public class Schema extends ListActivity {
             day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
             if (day.length() == 1) day = "0" + day;
             if (month.length() == 1) month = "0" + month;
+
             String today = year + month + day;
-
-            if (today.equals(oldDate))
-                return "Idag";
-
-            // Is it tomorrow?
             c.add(Calendar.DAY_OF_YEAR, 1);
             year = String.valueOf(c.get(Calendar.YEAR));
             month = String.valueOf(c.get(Calendar.MONTH) + 1);
@@ -229,53 +236,64 @@ public class Schema extends ListActivity {
             if (day.length() == 1) day = "0" + day;
             if (month.length() == 1) month = "0" + month;
             String tomorrow = year + month + day;
-            if (tomorrow.equals(oldDate))
-                return "Imorgon";
 
-            // Some other day
-            int m;
+            if (today.equals(oldDate))
+                returnDate = "Idag";
 
-            m = Integer.parseInt(oldDate.substring(4, 6));
-            day = oldDate.substring(6, 8);
-            switch (m) {
-                case 1:
-                    month = "Jan";
-                    break;
-                case 2:
-                    month = "Feb";
-                    break;
-                case 3:
-                    month = "Mar";
-                    break;
-                case 4:
-                    month = "Apr";
-                    break;
-                case 5:
-                    month = "Maj";
-                    break;
-                case 6:
-                    month = "Jun";
-                    break;
-                case 7:
-                    month = "Jul";
-                    break;
-                case 8:
-                    month = "Aug";
-                    break;
-                case 9:
-                    month = "Sep";
-                    break;
-                case 10:
-                    month = "Okt";
-                    break;
-                case 11:
-                    month = "Nov";
-                    break;
-                case 12:
-                    month = "Dec";
-                    break;
+            else if (tomorrow.equals(oldDate))
+                returnDate = "Imorgon";
+
+            else {// Some other day
+                int m;
+
+                m = Integer.parseInt(oldDate.substring(4, 6));
+                day = oldDate.substring(6, 8);
+                switch (m) {
+                    case 1:
+                        month = "Jan";
+                        break;
+                    case 2:
+                        month = "Feb";
+                        break;
+                    case 3:
+                        month = "Mar";
+                        break;
+                    case 4:
+                        month = "Apr";
+                        break;
+                    case 5:
+                        month = "Maj";
+                        break;
+                    case 6:
+                        month = "Jun";
+                        break;
+                    case 7:
+                        month = "Jul";
+                        break;
+                    case 8:
+                        month = "Aug";
+                        break;
+                    case 9:
+                        month = "Sep";
+                        break;
+                    case 10:
+                        month = "Okt";
+                        break;
+                    case 11:
+                        month = "Nov";
+                        break;
+                    case 12:
+                        month = "Dec";
+                        break;
+                }
+                returnDate = day + " " + month;
             }
-            return day + " " + month;
+            if (prevReturnDate.equals(returnDate))
+                return "";
+            else {
+                prevReturnDate = returnDate;
+                return returnDate;
+            }
         }
 
         @Override
@@ -294,6 +312,8 @@ public class Schema extends ListActivity {
             TextView tvSign = (TextView) v.findViewById(R.id.schemaSign);
             TextView tvMoment = (TextView) v.findViewById(R.id.schemaMoment);
             TextView tvDay = (TextView) v.findViewById(R.id.schemaDay);
+            TextView tvWeek = (TextView) v.findViewById(R.id.schemaWeek);
+            TableRow trHead = (TableRow) v.findViewById(R.id.tr_header);
 
             tvDate.setText(prettyDate(si.date));
             tvDay.setText(getDay(si.date));
@@ -303,7 +323,13 @@ public class Schema extends ListActivity {
             tvCourse.setText("Kurs: " + si.course);
             tvSign.setText("Lärare: " + si.sign);
             tvMoment.setText(si.moment);
-
+            String theWeek = getWeek(si.date);
+            if (theWeek == "")
+                trHead.setVisibility(View.INVISIBLE);
+            else {
+                trHead.setVisibility(View.VISIBLE);
+                tvWeek.setText("Vecka " + theWeek);
+            }
             return v;
         }
     }

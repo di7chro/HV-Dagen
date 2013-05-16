@@ -10,25 +10,30 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Min Dag"
+            android:paddingBottom="10dip"
             android:id="@+id/start_btn_mindag"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Schema"
+            android:paddingBottom="10dip"
             android:id="@+id/start_btn_schema"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Twitter"
+            android:paddingBottom="10dip"
             android:id="@+id/start_btn_twitter"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Logga in"
+            android:paddingBottom="10dip"
             android:id="@+id/start_btn_login"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Välj schema"
+            android:paddingBottom="10dip"
             android:id="@+id/start_btn_pickschema"/>
 </LinearLayout>

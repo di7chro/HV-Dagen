@@ -17,6 +17,15 @@
                 android:paddingBottom="4dip"
                 android:textColor="@color/general_title"
                 android:textSize="20sp" android:text="Date"/>
+
+        <TextView
+                android:id="@+id/schemaDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingRight="12dip"
+                android:textColor="@color/hv_txtColor"
+                android:textSize="14sp" android:text="Day"/>
         <TextView
                 android:id="@+id/schemaTime"
                 android:layout_width="wrap_content"
@@ -25,7 +34,6 @@
                 android:paddingRight="12dip"
                 android:textColor="@color/hv_txtColor"
                 android:textSize="14sp" android:text="Time"/>
-
         <TextView
                 android:id="@+id/schemaLocation"
                 android:layout_width="wrap_content"

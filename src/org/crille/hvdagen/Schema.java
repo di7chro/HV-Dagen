@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TableRow;
 import android.widget.TextView;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -313,7 +312,6 @@ public class Schema extends ListActivity {
             TextView tvMoment = (TextView) v.findViewById(R.id.schemaMoment);
             TextView tvDay = (TextView) v.findViewById(R.id.schemaDay);
             TextView tvWeek = (TextView) v.findViewById(R.id.schemaWeek);
-            TableRow trHead = (TableRow) v.findViewById(R.id.tr_header);
 
             tvDate.setText(prettyDate(si.date));
             tvDay.setText(getDay(si.date));
@@ -324,10 +322,11 @@ public class Schema extends ListActivity {
             tvSign.setText("Lärare: " + si.sign);
             tvMoment.setText(si.moment);
             String theWeek = getWeek(si.date);
-            if (theWeek == "")
-                trHead.setVisibility(View.INVISIBLE);
-            else {
-                trHead.setVisibility(View.VISIBLE);
+            if (theWeek == "") {
+                tvWeek.setVisibility(View.INVISIBLE);
+                tvWeek.setHeight(0);
+            } else {
+                tvWeek.setVisibility(View.VISIBLE);
                 tvWeek.setText("Vecka " + theWeek);
             }
             return v;

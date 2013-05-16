@@ -1,114 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/schemaTable"
-             android:layout_width="fill_parent"
-             android:layout_height="match_parent" android:textAlignment="center">
 
-    <!-- First row contains the Week -->
-    <TableRow
-            android:id="@+id/tr_header"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:paddingBottom="20dip" android:paddingLeft="4dip"
+              android:paddingRight="4dip">
+
+    <!-- The Week fills the entire width -->
+    <TextView
+            android:id="@+id/schemaWeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Week"
+            android:textColor="@color/hv_txtColor"
+            android:background="@color/general_title"
+            android:gravity="center"/>
+    <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:background="@color/general_title">
-
-        <!-- The Week fills the entire width -->
-        <TextView
-                android:id="@+id/schemaWeek"
-                android:gravity="center"
-                android:text="Week"
-                android:layout_span="2"
-                android:textColor="@color/hv_txtColor"
-                android:layout_width="match_parent"/>
-    </TableRow>
-
-    <!-- Second row contains the actual data -->
-    <TableRow
-            android:id="@+id/tr_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="fill_parent">
         <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left" android:layout_column="0"
-                android:orientation="vertical">
-
-            <TextView
-                    android:id="@+id/schemaDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingBottom="4dip"
-                    android:textColor="@color/general_title"
-                    android:textSize="20sp" android:text="Date"/>
-
-            <TextView
-                    android:id="@+id/schemaDay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingRight="12dip"
-                    android:textColor="@color/hv_txtColor"
-                    android:textSize="14sp" android:text="Day"/>
-            <TextView
-                    android:id="@+id/schemaTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingRight="12dip"
-                    android:textColor="@color/hv_txtColor"
-                    android:textSize="14sp" android:text="Time"/>
-            <TextView
-                    android:id="@+id/schemaLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingBottom="4dip"
-                    android:textColor="@color/hv_txtColor"
-                    android:textSize="14sp" android:text="Location"/>
-
-
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
                 android:orientation="vertical"
-                android:layout_gravity="right">
-
+                android:layout_width="90dip"
+                android:layout_height="fill_parent">
             <TextView
-                    android:id="@+id/schemaMoment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingBottom="4dip"
+                    android:id="@+id/schemaDate"
                     android:textColor="@color/general_title"
-                    android:textSize="20sp" android:text="Moment"/>
+                    android:textSize="20sp"
+                    android:text="Date"/>
             <TextView
-                    android:id="@+id/schemaCourse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:layout_weight="1"
-                    android:paddingTop="2dip"
+                    android:id="@+id/schemaDay"
                     android:textColor="@color/hv_txtColor"
-                    android:textSize="14sp" android:text="Kurs"/>
-
+                    android:textSize="14sp"
+                    android:text="Day"/>
             <TextView
-                    android:id="@+id/schemaProgram"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="2dip"
+                    android:id="@+id/schemaTime"
                     android:textColor="@color/hv_txtColor"
-                    android:textSize="14sp" android:text="Program"/>
-
+                    android:textSize="14sp"
+                    android:text="Time"/>
             <TextView
-                    android:id="@+id/schemaSign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/schemaLocation"
                     android:textColor="@color/hv_txtColor"
-                    android:paddingBottom="15dip"
-                    android:textSize="14sp" android:text="Sign"/>
-
+                    android:textSize="14sp"
+                    android:text="Location"/>
         </LinearLayout>
-    </TableRow>
-
-</TableLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/schemaMoment"
+                    android:textColor="@color/general_title"
+                    android:textSize="20sp"
+                    android:text="Moment"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/schemaCourse"
+                    android:textColor="@color/hv_txtColor"
+                    android:textSize="14sp"
+                    android:text="Kurs"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/schemaProgram"
+                    android:textColor="@color/hv_txtColor"
+                    android:textSize="14sp"
+                    android:text="Program"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/schemaSign"
+                    android:textColor="@color/hv_txtColor"
+                    android:textSize="14sp"
+                    android:text="Sign"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

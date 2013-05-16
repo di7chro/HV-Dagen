@@ -4,6 +4,14 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Mer detaljer om denna bokning"
+            android:textSize="20sp"
+            android:id="@+id/schema_header"
+            android:textColor="@color/general_title"
+            android:layout_gravity="left|center_vertical" android:paddingBottom="50dip"/>
 
     <TextView
             android:layout_width="fill_parent"

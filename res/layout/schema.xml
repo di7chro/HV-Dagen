@@ -10,7 +10,7 @@
     <TextView
             android:id="@+id/schemaWeek"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dip"
             android:text="Week"
             android:textColor="@color/hv_txtColor"
             android:background="@color/general_title"

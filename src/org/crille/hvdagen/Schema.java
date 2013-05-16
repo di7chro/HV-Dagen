@@ -327,6 +327,7 @@ public class Schema extends ListActivity {
                 tvWeek.setHeight(0);
             } else {
                 tvWeek.setVisibility(View.VISIBLE);
+                tvWeek.setHeight(20);
                 tvWeek.setText("Vecka " + theWeek);
             }
             return v;

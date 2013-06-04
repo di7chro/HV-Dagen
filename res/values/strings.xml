@@ -16,7 +16,7 @@
     <string name="login_username_hint">Användarnamn</string>
     <string name="login_password_hint">Lösenord</string>
     <string name="login_button_text">Logga in</string>
-    <string name="login_information">Ange uppgifterna du har till Högskolan Väst resurser.</string>
+    <string name="login_information">Logga in med dina vanliga uppgifterna som du använder för de olika systemen på Högskolan Väst.</string>
     <string name="login_kolla_uppgifter">Kollar dina uppgifter...</string>
     <string name="login_wrong_title">Fel inloggning</string>
     <string name="login_wrong_text">De uppgifter som du skrev in stämmer inte. Logga in med de uppgifter som du fått av

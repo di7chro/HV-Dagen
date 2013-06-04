@@ -60,12 +60,16 @@ public class MinDag extends ListActivity {
         // If nothing found: show message and send user to loginscreen
         if (storedUrl == "") {
             Log.i("MINDAG", "url är tom");
+            /*
+            Om man vill kan man ha en ruta här som säger att man inte loggat in,
+            men jag tycker att det är snabbare om man helt enkelt kommer till målet direkt.
+
             AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
             myBuild.setTitle("Inget sparat");
             myBuild.setMessage("Du har inte loggat in ännu. Nu kommer du dit.");
             myBuild.setNeutralButton("OK", null);
             myBuild.show();
-
+            */
             Intent goToLogin = new Intent(getApplicationContext(), Login.class);
             startActivity(goToLogin);
         } else {

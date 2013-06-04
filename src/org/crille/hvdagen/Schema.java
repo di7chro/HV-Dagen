@@ -65,13 +65,17 @@ public class Schema extends ListActivity {
 
         // If nothing found: show message and send user to pickschema screen
         if (storedUrl == "") {
+                        /*
+            Om man vill kan man ha en ruta här som säger att man inte loggat in,
+            men jag tycker att det är snabbare om man helt enkelt kommer till målet direkt.
+
             Log.i("SCHEMA", "SCHEMASTR är tom");
             AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
             myBuild.setTitle("Inget schema valt");
             myBuild.setMessage("Du har inte valt schema ännu. Nu kommer du dit.");
             myBuild.setNeutralButton("OK", null);
             myBuild.show();
-
+            */
             Intent goToPickschema = new Intent(getApplicationContext(), PickSchema.class);
             startActivity(goToPickschema);
         } else {

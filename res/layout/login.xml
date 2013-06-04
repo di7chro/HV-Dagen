@@ -8,6 +8,8 @@
             android:id="@+id/settingLoginTextHint"
             android:text="@string/login_information"
             android:layout_height="wrap_content"
+            android:textColor="@color/hv_txtColor"
+            android:textSize="18sp"
             android:layout_width="fill_parent"/>
     <EditText
             android:id="@+id/login_et_username"
